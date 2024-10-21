@@ -5,6 +5,11 @@ import * as theme from "../src/utils/themeVariables";
 import { Provider as PaperProvider, DefaultTheme } from "react-native-paper";
 import { remToPx } from "../src/utils/helper";
 
+type RecursiveType<T> = T extends object
+  ? { [K in keyof T]: RecursiveType<T[K]> }
+  : T;
+  export type ThemeVariablesType = RecursiveType<typeof theme>;
+
 const Layout = () => {
   const MyTheme = {
     ...DefaultTheme,
@@ -79,6 +84,7 @@ const Layout = () => {
         justifyContent: "center",
       },
     },
+    variables:theme
   };
   return (
     <PaperProvider theme={MyTheme}>
