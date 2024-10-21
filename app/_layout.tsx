@@ -87,6 +87,7 @@ const Layout = () => {
           <Stack.Screen name="index" options={{ title: "Home" }} />
           <Stack.Screen name="buttondemo" options={{ title: "Button Demo" }} />
           <Stack.Screen name="chipdemo" options={{ title: "Chip Demo" }} />
+          <Stack.Screen name="avatardemo" options={{ title: "Avatar Demo" }} />
         </Stack>
       </ScrollView>
     </PaperProvider>

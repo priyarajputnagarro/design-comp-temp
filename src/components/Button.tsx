@@ -17,6 +17,7 @@ const ButtonComponent: React.FC<ButtonComponentProps> = ({
 }) => {
   const theme: any = useTheme(); // need to create theme interface
 
+  const capitalize = (text: string) => text[0].toUpperCase() + text.slice(1);
   return (
     <Button
       theme={{
