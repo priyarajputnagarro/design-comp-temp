@@ -5,6 +5,8 @@ import { Provider as PaperProvider, DefaultTheme } from "react-native-paper";
 import * as theme from "./src/utils/themeVariables";
 import { remToPx } from "./src/utils/helper";
 import Chip from "./src/components/Chip";
+import Avatar from "./src/components/Avatar";
+import { MaterialIcons } from "@expo/vector-icons";
 
 const MyTheme = {
   ...DefaultTheme,
@@ -155,6 +157,10 @@ const App = () => {
         {showChips()}
 
         {showButtons()}
+
+        <Avatar variant={'TEXT'}/>
+        <Avatar variant={'IMAGE'} />
+       <Avatar variant={'ICON'} icon={() => <MaterialIcons name="folder" size={40} color="white" />}/>
       </ScrollView>
     </PaperProvider>
   );
