@@ -25,7 +25,6 @@ const AvatarComponent: React.FC<AvatarProps> = (props) => {
     case "initials":
       return (
         <Avatar.Text
-          size={remToPx(theme.variables.MobileGlobalGenSizeM)}
           style={[styles.common, styles.border, styles.backgroundColor]}
           labelStyle={styles.label}
           label={label}
@@ -35,7 +34,7 @@ const AvatarComponent: React.FC<AvatarProps> = (props) => {
       if(icon){
         return (
           <Avatar.Icon
-            size={remToPx(theme.variables.MobileGlobalGenSize3xs) / 0.6} //to override internal calculation
+            size={remToPx(theme.variables.MobileGlobalGenSize3xs) / 0.6} //To override internal calculation
             style={[styles.common, styles.backgroundColor, styles.icon]}
             icon={icon}
           />
@@ -47,7 +46,7 @@ const AvatarComponent: React.FC<AvatarProps> = (props) => {
     case "image":
       return (
         <Avatar.Image
-          size={remToPx(theme.variables.MobileGlobalGenSizeM)}
+          size={remToPx(theme.variables.MobileGlobalGenSizeM) - 2} //To set Image Size and adjust with border
           style={[styles.common, styles.border]}
           source={{ uri: imageURL }}
         />
