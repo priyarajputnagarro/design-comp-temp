@@ -45,6 +45,7 @@ const Layout = () => {
           <Stack.Screen name="buttondemo" options={{ title: "Button Demo" }} />
           <Stack.Screen name="chipdemo" options={{ title: "Chip Demo" }} />
           <Stack.Screen name="avatardemo" options={{ title: "Avatar Demo" }} />
+          <Stack.Screen name="(tabs)" options={{ title: "Icon Demo" }} />
         </Stack>
       </ScrollView>
     </PaperProvider>
