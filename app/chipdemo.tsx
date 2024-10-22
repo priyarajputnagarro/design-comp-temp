@@ -4,7 +4,7 @@ import Chip from "../src/components/Chip";
 
 const Chipdemo = () => {
   const showChips = () => (
-    <>
+    <View style={{ gap: 10, flexWrap: "wrap" }}>
       <Chip size="small" color="secondary" label="Chip" icon="sell" />
       <Chip size="medium" color="secondary" label="Chip" icon="sell" />
 
@@ -28,11 +28,11 @@ const Chipdemo = () => {
 
       <Chip size="small" color="successLight" label="Chip" icon="sell" />
       <Chip size="medium" color="successLight" label="Chip" icon="sell" />
-    </>
+    </View>
   );
 
   return (
-    <ScrollView contentContainerStyle={{ padding: 16, gap: 16 }}>
+    <ScrollView contentContainerStyle={{ padding: 16 }}>
       {showChips()}
     </ScrollView>
   );

@@ -1,7 +1,9 @@
 import React from "react";
 import { Chip, useTheme } from "react-native-paper";
 import { MaterialIcons } from "@expo/vector-icons";
-import { capitalize } from "../utils/helper";
+import { capitalize, remToPx } from "../utils/helper";
+import { StyleSheet } from "react-native";
+import { ThemeVariablesType } from "../../app/_layout";
 
 interface ChipComponentProps {
   size?: "small" | "medium";
@@ -16,29 +18,30 @@ const ChipComponent: React.FC<ChipComponentProps> = ({
   icon = "sell",
   color = "primary",
 }) => {
-  const theme: any = useTheme(); // need to create theme interface
+  const theme: { colors: any; variables: ThemeVariablesType } = useTheme();
+  const styles = getStyles(theme.variables);
 
   return (
     <Chip
       icon={() => (
         <MaterialIcons
           name={icon}
-          size={theme.chipSizes[size].fontSize}
+          size={styles[size].fontSize}
           color={theme.colors[`on${capitalize(color)}`]}
         />
       )}
       closeIcon={() => (
         <MaterialIcons
           name="close"
-          size={theme.chipSizes[size].fontSize}
+          size={styles[size].fontSize}
           color={theme.colors[`on${capitalize(color)}`]}
         />
       )}
-      style={{ ...theme.chipSizes[size], backgroundColor: theme.colors[color] }}
+      style={{ ...styles[size], backgroundColor: theme.colors[color] }}
       onClose={() => {}}
       textStyle={{
         color: theme.colors[`on${capitalize(color)}`],
-        fontSize: theme.chipSizes[size].fontSize,
+        fontSize: styles[size].fontSize,
       }}
     >
       {label}
@@ -47,3 +50,20 @@ const ChipComponent: React.FC<ChipComponentProps> = ({
 };
 
 export default ChipComponent;
+
+const getStyles = (theme: ThemeVariablesType) => {
+  return StyleSheet.create({
+    small: {
+      height: remToPx(theme.MobileGlobalGenSizeS),
+      paddingHorizontal: remToPx(theme.MobileGlobalGenSpacing2xs),
+      borderRadius: remToPx(theme.MobileGlobalGenRadiusMd),
+      fontSize: remToPx(theme.MobileGlobalFontSizeBodyS),
+    },
+    medium: {
+      height: remToPx(theme.MobileGlobalGenSizeM),
+      paddingHorizontal: remToPx(theme.MobileGlobalGenSpacing2xs),
+      borderRadius: remToPx(theme.MobileGlobalGenRadiusLg),
+      fontSize: remToPx(theme.MobileGlobalFontSizeBodyM),
+    },
+  });
+};
