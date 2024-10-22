@@ -18,6 +18,7 @@ const AvatarComponent: React.FC<AvatarProps> = (props) => {
     imageURL,
     label = "",
     badge = false, //TODO: Add badge support
+    ...rest
   } = props;
   const theme: { variables: ThemeVariablesType } = useTheme();
   const styles = getStyles(theme.variables);
@@ -28,6 +29,7 @@ const AvatarComponent: React.FC<AvatarProps> = (props) => {
           style={[styles.common, styles.border, styles.backgroundColor]}
           labelStyle={styles.label}
           label={label}
+          {...rest}
         />
       );
     case "icon":
@@ -37,6 +39,7 @@ const AvatarComponent: React.FC<AvatarProps> = (props) => {
             size={remToPx(theme.variables.MobileGlobalGenSize3xs) / 0.6} //To override internal calculation
             style={[styles.common, styles.backgroundColor, styles.icon]}
             icon={icon}
+            {...rest}
           />
         );
       }
@@ -49,6 +52,7 @@ const AvatarComponent: React.FC<AvatarProps> = (props) => {
           size={remToPx(theme.variables.MobileGlobalGenSizeM) - 2} //To set Image Size and adjust with border
           style={[styles.common, styles.border]}
           source={{ uri: imageURL }}
+          {...rest}
         />
       );
     default:
