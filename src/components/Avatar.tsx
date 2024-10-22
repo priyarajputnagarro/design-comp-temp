@@ -1,6 +1,6 @@
 import * as React from "react";
-import { StyleSheet, ImageSourcePropType} from "react-native";
-import { Avatar, useTheme, } from "react-native-paper";
+import { StyleSheet, ImageSourcePropType } from "react-native";
+import { Avatar, useTheme } from "react-native-paper";
 import { remToPx } from "../utils/helper";
 import { ThemeVariablesType } from "../../app/_layout";
 
@@ -26,24 +26,23 @@ const AvatarComponent: React.FC<AvatarProps> = (props) => {
     case "initials":
       return (
         <Avatar.Text
-          style={[styles.common, styles.border, styles.backgroundColor]}
+          style={[styles.common, styles.border]}
           labelStyle={styles.label}
           label={label}
           {...rest}
         />
       );
     case "icon":
-      if(icon){
+      if (icon) {
         return (
           <Avatar.Icon
             size={remToPx(theme.variables.MobileGlobalGenSize3xs) / 0.6} //To override internal calculation
-            style={[styles.common, styles.backgroundColor, styles.icon]}
+            style={[styles.common, styles.icon]}
             icon={icon}
             {...rest}
           />
         );
-      }
-      else{
+      } else {
         return <></>;
       }
     case "image":
@@ -59,9 +58,7 @@ const AvatarComponent: React.FC<AvatarProps> = (props) => {
       return <></>;
   }
 };
-const getStyles = (
-  themeVariables: ThemeVariablesType
-) => {
+const getStyles = (themeVariables: ThemeVariablesType) => {
   return StyleSheet.create({
     common: {
       display: "flex",
@@ -74,15 +71,13 @@ const getStyles = (
       alignItems: "center",
       flexShrink: 0,
       borderRadius: 100,
+      backgroundColor: themeVariables.ColorPrimarySubtlest,
     },
     border: {
       borderRadius: 100,
       borderColor: themeVariables.ColorPrimarySubtle,
       borderStyle: "solid",
       borderWidth: 1,
-    },
-    backgroundColor: {
-      backgroundColor: themeVariables.ColorPrimarySubtlest,
     },
     label: {
       color: themeVariables.ColorPrimaryMain,
