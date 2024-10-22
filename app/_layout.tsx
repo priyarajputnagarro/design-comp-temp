@@ -1,11 +1,23 @@
 import React from "react";
 import { Stack } from "expo-router";
-import { ScrollView, StyleSheet } from "react-native";
-import * as theme from "../src/utils/themeVariables";
-import { Provider as PaperProvider, DefaultTheme } from "react-native-paper";
+import { ScrollView, StyleSheet,useColorScheme } from "react-native";
+import * as lightTheme from "../src/utils/lightThemeVariables";
+import * as darkTheme from "../src/utils/darkThemeVariables";
+import { Provider as PaperProvider, DefaultTheme} from "react-native-paper";
 import { remToPx } from "../src/utils/helper";
 
+type RecursiveType<T> = T extends object
+  ? { [K in keyof T]: RecursiveType<T[K]> }
+  : T;
+export type ThemeVariablesType = RecursiveType<typeof lightTheme>;
+
+
 const Layout = () => {
+  const colorScheme = useColorScheme();
+  const theme =
+    colorScheme === 'dark'
+      ? darkTheme
+      : lightTheme;
   const MyTheme = {
     ...DefaultTheme,
     colors: {
@@ -79,6 +91,7 @@ const Layout = () => {
         justifyContent: "center",
       },
     },
+    variables:theme
   };
   return (
     <PaperProvider theme={MyTheme}>

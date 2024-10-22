@@ -1,25 +1,103 @@
 import * as React from "react";
-import { Avatar } from "react-native-paper";
-import { MaterialIcons } from "@expo/vector-icons";
+import { StyleSheet, ImageSourcePropType} from "react-native";
+import { Avatar, useTheme, } from "react-native-paper";
+import { remToPx } from "../utils/helper";
+import { ThemeVariablesType } from "../../app/_layout";
 
-
-type AvatarProps = {
-  variant: "TEXT" | "IMAGE" | "ICON";
-  icon?: any;
-};
-const AvatarComponent = (props: AvatarProps) => {
-  const { variant, icon } = props;
-  switch (variant) {
-    case "TEXT":
-      return <Avatar.Text size={64} label="TX" />;
-    case "ICON":
-      return <Avatar.Icon size={64} icon={icon} />;
-    case "IMAGE":
+interface AvatarProps {
+  content: "initials" | "icon" | "image";
+  imageURL?: string;
+  label?: string;
+  icon?: ImageSourcePropType;
+  badge?: boolean;
+}
+const AvatarComponent: React.FC<AvatarProps> = (props) => {
+  const {
+    content,
+    icon,
+    imageURL,
+    label = "",
+    badge = false, //TODO: Add badge support
+  } = props;
+  const theme: { variables: ThemeVariablesType } = useTheme();
+  const styles = getStyles(theme.variables);
+  switch (content) {
+    case "initials":
       return (
-        <Avatar.Image size={64} source={{ uri: "https://picsum.photos/200" }} />
+        <Avatar.Text
+          size={remToPx(theme.variables.MobileGlobalGenSizeM)}
+          style={[styles.common, styles.border, styles.backgroundColor]}
+          labelStyle={styles.label}
+          label={label}
+        />
+      );
+    case "icon":
+      if(icon){
+        return (
+          <Avatar.Icon
+            size={remToPx(theme.variables.MobileGlobalGenSize3xs) / 0.6} //to override internal calculation
+            style={[styles.common, styles.backgroundColor, styles.icon]}
+            icon={icon}
+          />
+        );
+      }
+      else{
+        return <></>;
+      }
+    case "image":
+      return (
+        <Avatar.Image
+          size={remToPx(theme.variables.MobileGlobalGenSizeM)}
+          style={[styles.common, styles.border]}
+          source={{ uri: imageURL }}
+        />
       );
     default:
-      return <Avatar.Text size={64} label="NA" />;
+      return <></>;
   }
 };
+const getStyles = (
+  themeVariables: ThemeVariablesType
+) => {
+  return StyleSheet.create({
+    common: {
+      display: "flex",
+      width: remToPx(themeVariables.MobileGlobalGenSizeM),
+      height: remToPx(themeVariables.MobileGlobalGenSizeM),
+      minWidth: remToPx(themeVariables.MobileGlobalGenSizeXs),
+      minHeight: remToPx(themeVariables.MobileGlobalGenSizeXs),
+      flexDirection: "column",
+      justifyContent: "center",
+      alignItems: "center",
+      flexShrink: 0,
+      borderRadius: 100,
+    },
+    border: {
+      borderRadius: 100,
+      borderColor: themeVariables.ColorPrimarySubtle,
+      borderStyle: "solid",
+      borderWidth: 1,
+    },
+    backgroundColor: {
+      backgroundColor: themeVariables.ColorPrimarySubtlest,
+    },
+    label: {
+      color: themeVariables.ColorPrimaryMain,
+      textAlign: "center",
+      fontSize: remToPx(themeVariables.MobileGlobalFontSizeHeadingFive),
+      fontWeight: "400",
+      lineHeight: remToPx(themeVariables.MobileGlobalLineHeightHeadingFive),
+    },
+    icon: {
+      minWidth: remToPx(themeVariables.MobileGlobalGenSize3xs),
+      minHeight: remToPx(themeVariables.MobileGlobalGenSize3xs),
+      alignSelf: "stretch",
+      display: "flex",
+      padding: remToPx(themeVariables.MobileGlobalGenSpacingXs),
+      alignItems: "center",
+      gap: remToPx(themeVariables.MobileGlobalGenSpacingXs),
+    },
+  });
+};
+
 export default AvatarComponent;
