@@ -17,6 +17,9 @@ const Index = () => {
       <Link href={"/avatardemo"} style={{ fontSize: 20 }}>
         Avatar
       </Link>
+      <Link href={"/badgedemo"} style={{ fontSize: 20 }}>
+        Badge
+      </Link>
     </View>
   );
 };
