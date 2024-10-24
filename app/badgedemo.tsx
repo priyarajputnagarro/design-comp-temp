@@ -1,7 +1,7 @@
 import React from "react";
 import Avatar from "../src/components/Avatar";
 import { ScrollView } from "react-native";
-import { Badge } from "../src/components/Badge";
+import Badge from "../src/components/Badge";
 
 const AvatarDemo = () => {
   return (

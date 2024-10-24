@@ -3,6 +3,7 @@ import { StyleSheet, ImageSourcePropType } from "react-native";
 import { Avatar, useTheme } from "react-native-paper";
 import { remToPx } from "../utils/helper";
 import { ThemeVariablesType } from "../../app/_layout";
+import Badge, { BadgeProps } from "./Badge";
 
 interface AvatarProps {
   content: "initials" | "icon" | "image";
@@ -10,6 +11,7 @@ interface AvatarProps {
   label?: string;
   icon?: ImageSourcePropType;
   badge?: boolean;
+  badgeProps?: BadgeProps;
 }
 const AvatarComponent: React.FC<AvatarProps> = (props) => {
   const {
@@ -17,14 +19,16 @@ const AvatarComponent: React.FC<AvatarProps> = (props) => {
     icon,
     imageURL,
     label = "",
-    badge = false, //TODO: Add badge support
+    badge = false,
+    badgeProps,
     ...rest
   } = props;
   const theme: { variables: ThemeVariablesType } = useTheme();
   const styles = getStyles(theme.variables);
+  let avatar = <></>;
   switch (content) {
     case "initials":
-      return (
+      avatar = (
         <Avatar.Text
           style={[styles.common, styles.border]}
           labelStyle={styles.label}
@@ -32,9 +36,10 @@ const AvatarComponent: React.FC<AvatarProps> = (props) => {
           {...rest}
         />
       );
+      break;
     case "icon":
       if (icon) {
-        return (
+        avatar = (
           <Avatar.Icon
             size={remToPx(theme.variables.MobileGlobalGenSize3xs) / 0.6} //To override internal calculation
             style={[styles.common, styles.icon]}
@@ -42,11 +47,10 @@ const AvatarComponent: React.FC<AvatarProps> = (props) => {
             {...rest}
           />
         );
-      } else {
-        return <></>;
       }
+      break;
     case "image":
-      return (
+      avatar = (
         <Avatar.Image
           size={remToPx(theme.variables.MobileGlobalGenSizeM) - 2} //To set Image Size and adjust with border
           style={[styles.common, styles.border]}
@@ -54,9 +58,12 @@ const AvatarComponent: React.FC<AvatarProps> = (props) => {
           {...rest}
         />
       );
-    default:
-      return <></>;
+      break;
   }
+  if (badge || badgeProps) {
+    return <Badge instance={avatar} color="error" position="bottom-right" {...badgeProps}/>;
+  }
+  return avatar;
 };
 const getStyles = (themeVariables: ThemeVariablesType) => {
   return StyleSheet.create({

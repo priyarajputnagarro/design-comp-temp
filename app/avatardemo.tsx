@@ -13,6 +13,23 @@ const AvatarDemo = () => {
           "https://fastly.picsum.photos/id/204/5000/3333.jpg?hmac=EealoGuyf-stZ5_tXjA82uPviolpuqVJVaZ5cBB-hLE"
         }
       />
+      <Avatar content={"initials"} label="TX" badge />
+      <Avatar
+        content={"icon"}
+        icon={require("../assets/briefcase.png")}
+        badgeProps={{ color: "success", position: "bottom-right" }}
+      />
+      <Avatar
+        content={"image"}
+        imageURL={
+          "https://fastly.picsum.photos/id/204/5000/3333.jpg?hmac=EealoGuyf-stZ5_tXjA82uPviolpuqVJVaZ5cBB-hLE"
+        }
+        badgeProps={{
+          color: "success",
+          position: "bottom-right",
+          badgeContent: "2",
+        }}
+      />
     </ScrollView>
   );
 };

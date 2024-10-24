@@ -19,14 +19,14 @@ type BadgePosition =
   | typeof BOTTOMLEFT
   | typeof BOTTOMRIGHT;
 
-interface BadgeProps extends RNPBadgeProps {
+export interface BadgeProps extends RNPBadgeProps {
   instance?: React.ReactNode;
   badgeContent?: string | undefined;
   color?: "error" | "success";
   position?: BadgePosition;
 }
 
-export const Badge: React.FC<BadgeProps> = ({
+const Badge: React.FC<BadgeProps> = ({
   visible = true,
   badgeContent,
   instance,
@@ -79,3 +79,5 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
 });
+
+export default Badge;
