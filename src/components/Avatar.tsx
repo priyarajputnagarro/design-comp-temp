@@ -1,5 +1,11 @@
 import * as React from "react";
-import { StyleSheet, ImageSourcePropType } from "react-native";
+import {
+  StyleSheet,
+  ImageSourcePropType,
+  GestureResponderEvent,
+  TouchableOpacity,
+  TouchableOpacityProps,
+} from "react-native";
 import { Avatar, useTheme } from "react-native-paper";
 import { remToPx } from "../utils/helper";
 import { ThemeVariablesType } from "../../app/_layout";
@@ -9,9 +15,11 @@ interface AvatarProps {
   content: "initials" | "icon" | "image";
   imageURL?: string;
   label?: string;
-  icon?: ImageSourcePropType;
+  icon?: ImageSourcePropType | string;
   badge?: boolean;
   badgeProps?: BadgeProps;
+  onPress?: (e: GestureResponderEvent) => void;
+  touchProps?: TouchableOpacityProps;
 }
 const AvatarComponent: React.FC<AvatarProps> = (props) => {
   const {
@@ -21,14 +29,16 @@ const AvatarComponent: React.FC<AvatarProps> = (props) => {
     label = "",
     badge = false,
     badgeProps,
+    onPress,
+    touchProps,
     ...rest
   } = props;
   const theme: { variables: ThemeVariablesType } = useTheme();
   const styles = getStyles(theme.variables);
-  let avatar = <></>;
+  let component = <></>;
   switch (content) {
     case "initials":
-      avatar = (
+      component = (
         <Avatar.Text
           style={[styles.common, styles.border]}
           labelStyle={styles.label}
@@ -39,7 +49,7 @@ const AvatarComponent: React.FC<AvatarProps> = (props) => {
       break;
     case "icon":
       if (icon) {
-        avatar = (
+        component = (
           <Avatar.Icon
             size={remToPx(theme.variables.MobileGlobalGenSize3xs) / 0.6} //To override internal calculation
             style={[styles.common, styles.icon]}
@@ -50,7 +60,7 @@ const AvatarComponent: React.FC<AvatarProps> = (props) => {
       }
       break;
     case "image":
-      avatar = (
+      component = (
         <Avatar.Image
           size={remToPx(theme.variables.MobileGlobalGenSizeM) - 2} //To set Image Size and adjust with border
           style={[styles.common, styles.border]}
@@ -61,9 +71,23 @@ const AvatarComponent: React.FC<AvatarProps> = (props) => {
       break;
   }
   if (badge || badgeProps) {
-    return <Badge instance={avatar} color="error" position="bottom-right" {...badgeProps}/>;
+    component = (
+      <Badge
+        instance={component}
+        color="error"
+        position="bottom-right"
+        {...badgeProps}
+      />
+    );
   }
-  return avatar;
+  if (onPress) {
+    component = (
+      <TouchableOpacity onPress={onPress} style={styles.touchableOpacity} {...touchProps}>
+        {component}
+      </TouchableOpacity>
+    );
+  }
+  return component;
 };
 const getStyles = (themeVariables: ThemeVariablesType) => {
   return StyleSheet.create({
@@ -102,6 +126,7 @@ const getStyles = (themeVariables: ThemeVariablesType) => {
       alignItems: "center",
       gap: remToPx(themeVariables.MobileGlobalGenSpacingXs),
     },
+    touchableOpacity: { alignSelf: "flex-start" },
   });
 };
 

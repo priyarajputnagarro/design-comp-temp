@@ -6,7 +6,9 @@ const AvatarDemo = () => {
   return (
     <ScrollView contentContainerStyle={{ padding: 16, gap: 16 }}>
       <Avatar content={"initials"} label="TX" />
-      <Avatar content={"icon"} icon={require("../assets/briefcase.png")} />
+      <Avatar content={"icon"} icon={require("../assets/briefcase.png")} onPress={() => {
+          console.log(Math.random());
+        }} />
       <Avatar
         content={"image"}
         imageURL={
@@ -28,6 +30,9 @@ const AvatarDemo = () => {
           color: "success",
           position: "bottom-right",
           badgeContent: "2",
+        }}
+        onPress={() => {
+          console.log(Math.random());
         }}
       />
     </ScrollView>
