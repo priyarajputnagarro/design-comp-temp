@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import {
   Badge as RNPBadge,
   BadgeProps as RNPBadgeProps,
@@ -8,22 +8,11 @@ import {
 import { ThemeVariablesType } from "../../app/_layout";
 import { remToPx } from "../utils/helper";
 
-const TOPLEFT = "top-left" as const;
-const TOPRIGHT = "top-right" as const;
-const BOTTOMLEFT = "bottom-left" as const;
-const BOTTOMRIGHT = "bottom-right" as const;
-
-type BadgePosition =
-  | typeof TOPLEFT
-  | typeof TOPRIGHT
-  | typeof BOTTOMLEFT
-  | typeof BOTTOMRIGHT;
-
 export interface BadgeProps extends RNPBadgeProps {
   instance?: React.ReactNode;
   badgeContent?: string | undefined;
   color?: "error" | "success";
-  position?: BadgePosition;
+  position?: "top-left" | "top-right" | "bottom-left" | "bottom-right";
 }
 
 const Badge: React.FC<BadgeProps> = ({
@@ -31,7 +20,7 @@ const Badge: React.FC<BadgeProps> = ({
   badgeContent,
   instance,
   color = "success",
-  position = TOPRIGHT,
+  position = "top-right",
 }) => {
   const theme: { colors: any; variables: ThemeVariablesType } = useTheme();
   const adjustedSize = badgeContent
@@ -41,13 +30,13 @@ const Badge: React.FC<BadgeProps> = ({
 
   const getPosition = () => {
     switch (position) {
-      case TOPLEFT:
+      case "top-left":
         return { top: positionValue, left: positionValue };
-      case TOPRIGHT:
+      case "top-right":
         return { top: positionValue, right: positionValue };
-      case BOTTOMLEFT:
+      case "bottom-left":
         return { bottom: positionValue, left: positionValue };
-      case BOTTOMRIGHT:
+      case "bottom-right":
         return { bottom: positionValue, right: positionValue };
     }
   };
